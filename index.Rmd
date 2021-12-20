@@ -1,86 +1,324 @@
 ---
-title: "Origen Destino"
+title: "Servicios de salud Chile"
 author: "Miguelina Mieras"
-date: "25 de agosto de 2020"
-output:
-  html_document: default
-  pdf_document: default
+date: "16/12/2021"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Centros de Distribución de Medicamentos en Chile
 
-## Matrices Origen - Destino
+*****DESARROLLO DE INTRODUCCIÓN*****
 
-Ciruelas 
+
+
+
+
+
+
+
+
+### Problema
+El presente trabajo busca determinar, en primera instancia, la cantidad óptima de centros de distribución de medicamentos que debería tener la *Central de Abastecimiento del Sistema Nacional de Servicios de Salud* (CENABAST), la cual es una institución pública, descentralizada dependiente del Ministerio de Salud de la República de Chile. La misión de la mencionada organización es “contribuir al bienestar de la población, asegurando la disponibilidad de medicamentos, alimentos, insumos y equipamiento a la Red de Salud, mediante la gestión de un servicio de abastecimiento de excelencia, eficiente y de calidad, para mejorar la salud de todas las personas que habitan en Chile” [1].
+
+Luego se pretende precisar la ubicación de los mismos dentro del territorio e informar a qué centros de salud abastecería cada distribuidora.
+
+### Método kmeans
+
+A efectos de sostener un estilo único en los gráficos conviene crear una función de ploteo en la que repito los parámetros, *nc* es el número máximo de grupos a considerar y *seed* es una semilla de número aleatorio.
+
+```{r}
+wssplot <- function(data, nc=13, seed=1234){
+               wss <- (nrow(data)-1)*sum(apply(data,2,var))
+               for (i in 2:nc){
+                    set.seed(seed)
+                    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+                plot(1:nc, wss, type="b", xlab="Número de Clusters",
+                     ylab="Suma cuadrática dentro de cada grupo")}
+```
+
+
+Invocar la base de datos
+
 
 ```{r}
 library(readr)
-#Vinos_Mosto <- read_delim("/media/rpalma/OS/AAA_Datos/2020/BID/Estadisticas/Matriz Origen Destino/CSV/Ciruela.csv", 
-#    ";", escape_double = FALSE, trim_ws = TRUE)
-
-Vinos_Mosto <- read_delim("Ciruela.csv", ";", escape_double = FALSE, trim_ws = TRUE)
-
-Vinos_Mosto <- as.matrix(Vinos_Mosto)
-Vinos_Mosto <- Vinos_Mosto/1000000
-
-
-Zonas <- read_delim("Zonas.csv",";", escape_double = FALSE, trim_ws = TRUE)
-
-
-rownames(Vinos_Mosto) <- Zonas$CENTROIDE
-Vinos_Mosto <- Vinos_Mosto[ , -1]
-colnames(Vinos_Mosto) <- Zonas$CENTROIDE
-
-
-
-
-
-
+SSCHILE <- read_csv("SSCH.data")
 ```
-
-
-Origen y Destino por Zonas Centroides
+Definir el nombre de cada columna
 
 ```{r}
-library(circlize)
-chordDiagram(Vinos_Mosto, transparency = 0.5, big.gap = 10 )
+columnas <- list("Reg",
+                 "Lat",
+                 "Lng",
+                 "Gasto",
+                 "Conect",
+                 "Dres",
+                 "Pobl",
+                 "< 15",
+                 "> 65",
+                 "Dens",
+                 "Pobl Urb",
+                 "Nat",
+                 "Mort",
+                 "Esp Vida"               )
 
 
+colnames(SSCHILE) <- columnas
 ```
-
 
 
 ```{r}
-# circos.dendrogram(Vinos_Mosto, facing = "inside")
+library(DT)
+library(kableExtra)
 ```
 
 
-Archivos de Datos:
-
-[Matriz Origen Destino](Ciruela.csv)
-[Centros Urbanos Nodos](Zonas.csv)
-[Fuente del Proyecto](index.Rmd)
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+DT::datatable(SSCHILE)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+Generar un reporte exploratorio automático con la biblioteca *skim* a fin de observar las carateristicas de la matriz.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+```{r}
+library(skimr)
+skim(SSCHILE)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Observar como se comporta la suma cuadrática dentro de cada grupo dependiendo del número de cluster
+
+```{r}
+df <- scale(SSCHILE[-1])
+```
+
+```{r}
+wssplot (df)
+```
+
+El índice de Hubert es un método gráfico para determinar el número de clusters. En la gráfica del índice de Hubert, se busca una rodilla significativa que corresponda a un aumento en el valor de la medida, es decir, el pico significativo en la gráfica de las segundas diferencias del índice de Hubert.
+
+Al intentar ejecutar el código, sucede lo siguiente:
+
+*library(NbClust)
+set.seed(1234)
+nc1 <- NbClust(df, min.nc=2, max.nc=13, method="kmeans")*
+
+**Error in solve.default(W) : sistema es computacionalmente singular: número de condición recíproco = 8.72644e-17**
+
+El error indica que hay algún par de columnas que tienen alta correlación. Si dos columnas tienen dependencia lineal el valor kappa (o número de condición) es malo. Para tratar de identificarlas se utiliza **corrplot**
+
+
+```{r}
+SSCHILE.cor <- cor(SSCHILE, method = "pearson")
+```
+
+```{r}
+round(SSCHILE.cor, digits = 2)
+```
+
+```{r}
+corrplot::corrplot(SSCHILE.cor, tl.col = "black", tl.srt = 45)
+```
+```{r}
+corrplot::corrplot(SSCHILE.cor, tl.col = "black", tl.srt = 45, type = "upper")
+```
+
+
+
+
+
+Se observa que, como es lógico la diagonal principal presenta altísima correlación. También se identifica que las columnas *Doctores*, *Población*, *Menores de 15*, *Mayores de 65*, *Densidad* y *Población Urbana* están sumamente relacionadas y son directamente proporcionales. Esto es razonable ya que *Doctores*, *Menores de 15*, *Mayores de 65*, *Densidad* y *Población Urbana* son un porcentaje de *Población*. Para suplir este inconveniente se realiza la eliminación de 5 parámetros, se opta por dejar **"Pobl"**. Por otro lado se visualiza que *Región* presenta una relación inversamente proporcional con *Latitud* y *Natalidad*, se opta porque permanezca **"Reg"**.
+
+Invocar la nueva base de datos
+
+
+```{r}
+library(readr)
+SSCHILEmodificado <- read_csv("SSCHmodificado.data")
+```
+
+Nombrar las columnas que siguen formando parte del dataset
+
+```{r}
+columnas <- list("Reg",
+                 "Lng",
+                 "Gasto",
+                 "Conect",
+                 "Pobl",
+                 "Mort",
+                 "Esp Vida"  )
+
+colnames(SSCHILEmodificado) <- columnas
+```
+
+
+```{r}
+dt <- SSCHILEmodificado[1:14, 1:7]
+kbl(dt)
+```
+
+
+Generar un reporte exploratorio automático con la biblioteca *skim* a fin de observar las carateristicas de la nueva matriz.
+
+```{r}
+library(skimr)
+skim(SSCHILEmodificado)
+```
+
+Verificar si continúa habiendo alta correlación entre los parametros
+
+
+```{r}
+corrplot::corrplot(cor(SSCHILEmodificado))
+```
+
+Crear una nueva función de ploteo
+
+```{r}
+wssplott <- function(data, nc=7, seed=1234){
+               wss <- (nrow(data)-1)*sum(apply(data,2,var))
+               for (i in 2:nc){
+                    set.seed(seed)
+                    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+                plot(1:nc, wss, type="b", xlab="Número de Clusters",
+                     ylab="Suma cuadrática dentro de cada grupo")}
+```
+
+Observar como se comporta la suma cuadrática dentro de cada grupo dependiendo del número de cluster
+
+```{r}
+df <- scale(SSCHILEmodificado[-1])
+```
+
+```{r}
+wssplott (df)
+```
+Utilizar el método gráfico del índice de Hubert para buscar una rodilla significativa que corresponda a un aumento en el valor de la medida.
+
+```{r}
+library(NbClust)
+set.seed(1234)
+nc <- NbClust(df, min.nc=2, max.nc=7, method="kmeans")
+```
+
+
+```{r}
+table(nc$Best.n[1,])
+```
+                  
+```{r}
+barplot(table(nc$Best.n[1,]), 
+          xlab="Numer of Clusters", ylab="Number of Criteria",
+          main="Number of Clusters Chosen by 26 Criteria")
+```
+
+¿Cuántas muestras hay en cada grupo?
+
+
+```{r}
+set.seed(1234)
+fit.km <- kmeans(df, 4, nstart=25)                           #3
+fit.km$size
+```
+
+¿Dónde estan los centroides?
+
+```{r}
+fit.km$centers  
+```
+
+Matriz de confusión
+
+
+```{r}
+ct.km <- table(SSCHILEmodificado$Conect, fit.km$cluster)
+ct.km  
+```
+
+
+
+###¿Dónde ubicar los 4 centros de distribución?
+
+En principio, se localizan en el mapa de Chile los centros de salud que son considerados en el presente estudio.
+
+
+```{r}
+library(leaflet)
+library(leaflet.extras)
+library(tidyverse)
+```
+
+
+```{r}
+ServiciosSalud <- c(-29.90670708,-71.24674997,4,749400,
+-33.04399273,-71.6214775,5,1814100,
+-33.4375638,-70.64300933,13,7069600,
+-34.15805309,-70.76435849,6,908600,
+-35.42909604,-71.666239,7,1031600,
+-36.82880625,-73.05148486,8,2074100,
+-41.47191807,-72.9353147,10,867300,
+-45.5688345,-72.07279082,11,107900,
+-53.16125363,-70.90396509,12,160200,
+-39.81351773,-73.23982267,14,382700,
+-20.2152542,-70.15295234,1,336100,
+-38.74292378,-72.59147196,9,994400  )
+
+ServiciosSalud_matrix <- matrix(ServiciosSalud,ncol=4, byrow = TRUE)
+colnames(ServiciosSalud_matrix) <- c("Lat","Lng","Reg","Pobl")
+ServiciosSalud_matrix
+```
+
+
+
+```{r}
+mision <- data.frame(lat=ServiciosSalud_matrix[ ,1], long=ServiciosSalud_matrix[ ,2], Región=ServiciosSalud_matrix[ ,3],Población=ServiciosSalud_matrix[ ,4],stringsAsFactors=FALSE)
+
+
+leaflet(data = mision) %>%  addTiles() %>% addMarkers(clusterOptions = markerClusterOptions())
+```
+
+
+
+```{r}
+library(dplyr)
+library(VIM)
+aggr(SSCHILE)
+library(lubridate)
+library(factoextra)
+library(tidyverse)
+plot(SSCHILE$Lat,SSCHILE$Lng)
+k2 <- kmeans(SSCHILE, centers = 4, nstart = 25)
+str(k2)
+fviz_cluster(k2, data = SSCHILE)
+head(k2$centers)
+```
+
+```{r}
+CentrosDistribucion <- c(-35.99274, -71.46390, 1, 513350,
+                    -35.73867, -71.95973, 2, 1280033,
+                    -32.09704, -71.69170, 3, 1180350,
+                    -33.43756, -70.64301, 4, 7069600  )
+
+CentrosDistribucion_matrix <- matrix(CentrosDistribucion,ncol=4, byrow = TRUE)
+colnames(CentrosDistribucion_matrix) <- c("Lat","Lng","Reg","Pobl")
+CentrosDistribucion_matrix
+```
+
+
+```{r}
+centros <- data.frame(lat=CentrosDistribucion_matrix[ ,1], long=CentrosDistribucion_matrix[ ,2], Reg=CentrosDistribucion_matrix[ ,3],Pobl=CentrosDistribucion_matrix[ ,4],stringsAsFactors=FALSE)
+
+
+leaflet(data = centros) %>%  addTiles() %>% addMarkers(clusterOptions = markerClusterOptions())
+```
+¡LA UBICACIÓN DE UNO DE LOS CLUSTER QUEDA EN EL AGUA!
+
+### Referencias
+
+[1] https://www.cenabast.cl/institucion/quienes-somos/. Fecha de acceso 20/12/2021.
+
