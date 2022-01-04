@@ -3,6 +3,7 @@ title: "Servicios de salud Chile"
 author: "Miguelina Mieras"
 date: "16/12/2021"
 output: html_document
+bibliography: bibliografiachile.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -11,18 +12,41 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Centros de Distribución de Medicamentos en Chile
 
-*****DESARROLLO DE INTRODUCCIÓN*****
+### Introducción
 
+Los medicamentos son herramientas terapéuticas utilizadas en la práctica de la medicina, siendo considerados un bien esencial en el desarrollo de los países.
 
+El acceso a medicamentos, de calidad y con uso racional permite la obtención de importantes beneficios en materia de prevención, diagnóstico y tratamiento de las enfermedades y sus síntomas.
 
+La normativa actual (Artículo 7º, Decreto 3/2010) define al medicamento como:
 
+Producto farmacéutico o medicamento es cualquier sustancia, natural o sintética, o mezcla de ellas, que se destine al ser humano con fines de curación, atenuación, tratamiento, prevención o diagnóstico de las enfermedades o sus síntomas, para modificar sistemas fisiológicos o el estado mental en beneficio de la persona a quien le es administrado. Se consideran productos farmacéuticos las materias primas activas, los preparados farmacéuticos, las especialidades farmacéuticas y los medicamentos herbarios tradicionales.
 
+La Central de Abastecimiento del Sistema Nacional de Servicios de Salud (CENABAST) tiene por objetivo abastecer de fármacos e insumos clínicos a los establecimientos del Sistema Nacional de Servicios de Salud, a los establecimientos municipales de salud y a otros adscritos al sector público, como los hospitales de las fuerzas armadas o universidades.
 
+La Organización Panamericana de la Salud propone 12 atributos para medir la integración de las redes de servicios, los cuales deben de ser contextualizados a cada país de la región de manera que puedan ser aplicables a cada uno de ellos [@lopez2009presencia]. Con el propósito de determinar la presencia en el sistema de salud cubano de estos atributos, se realizó esta investigación descriptiva, de corte transversal, en la categoría de investigación en sistemas y servicios de salud. La muestra quedó constituida por 7 provincias del país seleccionadas por un muestreo aleatorio simple. Las variables incluidas respondían a los atributos propuestos por la Organización Panamericana de la Salud. La mayor parte de los atributos (66 %) fueron visualizados en todos los niveles del sistema de salud, mientras que el 25 % de estos fue señalado en al menos un nivel del sistema. De manera general podemos concluir que los 12 atributos propuestos por la Organización Panamericana de la Salud como esenciales y necesarios para alcanzar un adecuado funcionamiento en un Sistema Integrado de Servicios de Salud están presentes en la realidad sanitaria cubana, en todos o al menos 1 de los niveles del sistema nacional de salud. La consulta realizada no produjo nuevos atributos que se consideraran por la parte cubana como esenciales para un adecuado funcionamiento del Sistema Integrado de Servicios a la Salud.
 
+Una extensa oferta de establecimientos y servicios de salud, que incluyen servicios de salud pública, promoción de salud, prevención de enfermedades, diagnóstico y tratamiento oportuno, rehabilitación y cuidados paliativos, todos bajo un único paraguas organizacional.
+Un primer nivel de atención que actúa de facto como puerta de entrada al sistema, que integra y coordina el cuidado de la salud y resuelve la mayoría de las necesidades de salud de la población.
+Entrega de servicios de especialidad en el lugar más apropiado, que se dan preferentemente en ambientes extra-hospitalarios.
+Existencia de mecanismos de coordinación asistencial a lo largo de todo el continuo de servicios.
+Cuidados de la salud centrados en la persona, la familia y la comunidad territorio.
+Un sistema de gobernanza participativa y único para todo el SISS.
+Gestión integrada de los sistemas administrativos y de apoyo clínico.
+Recursos humanos suficientes, competentes y comprometidos con el sistema.
+Sistema de información integrado y que vincule a todos los miembros del SISS.
+Financiamiento adecuado e incentivos financieros alineados con las metas existentes.
+
+Con el análisis estratificado, se permitió determinar aglomeraciones de territorios con similaridades en el comportamiento de diversas variables, con el propósito de contribuir a la selección de sitios centinelas para la vigilancia y las investigaciones epidemiológicas de problemas de salud relevantes, aplicar intervenciones de acuerdo con las condiciones de cada estrato y facilitar la planificación y ubicación de los recursos. El método aplicado fue el análisis de cluster, utilizando un grupo de variables demográficas y socioeconómicas (densidad demográfica, tipo de comunidad, actividad económica principal), en dos etapas: elaboración del árbol jerárquico y posteriormente la conformación de los cluster [@batista2001determinacion]. Se delimitaron cuatro estratos territoriales en el país, determinados básicamente por la densidad demográfica, variable relacionada con el tipo de comunidad y la actividad económica predominante en cada territorio. Esta agrupación permitirá aplicar otros análisis del comportamiento de enfermedades y daños, así como diseños muestrales sobre la base de los estratos determinados.
+
+Los medicamentos son productos sensibles a los factores ambientales, especialmente a la temperatura y la humedad. La logística farmacéutica debe estar bien planificada y ejecutada, a fin de garantizar la conservación de los productos y brindar los más altos niveles de servicio al cliente. La planificación logística comienza con la decisión de ubicación de las instalaciones, como plantas de producción y centros de distribución. La ubicación de las plantas es una decisión a muy largo plazo porque requiere una alta inversión de capital, tiempo y tecnología, así como licencias de entidades sanitarias y gubernamentales. Sin embargo, la ubicación de los centros de distribución es más flexible porque se pueden contratar servicios para un sector farmacéutico de operadores logísticos especializados. Estos operadores logísticos cuentan con estructuras de centros de distribución que se pueden compartir entre varias empresas, ofreciendo menores costos logísticos y flexibilidad en la planificación de las redes de distribución. Las decisiones de gestión de transporte y de inventario, aunque son decisiones de nivel táctico y operativo, tienen el potencial de impactar significativamente el rendimiento de la red, por lo que deben ser consideradas en la planificación desde el principio [@osorio2017modelo].
+En este contexto, este trabajo se enfoca en la planificación de los centros de distribución, proponiendo un modelo de programación matemática para apoyar la decisión de ubicación de los centros de distribución (selección de sitios existentes del operador logístico) y decisiones tácticas de transporte, más específicamente, flujo de producto; selección modal, tipos de carga y tipos de vehículos; y uso de escoltas en el transporte de carga. En el modelo se consideran características particulares de la red, como la conservación de los productos de la cadena de frío y las transacciones de seguridad para el transporte de carga, así como las características del contexto tributario brasileño asociado al Impuesto a la Circulación de Bienes y Servicios (ICMS). El modelo propuesto fue analizado en base a la simplificación de datos reales de una empresa multinacional del sector farmacéutico. Debido a la dimensión del problema, se utilizó el método de K-medias para la agregación de productos en familias y también se estudió la agregación de la demanda en el horizonte de planificación, con el fin de lograr un adecuado equilibrio entre la tratabilidad computacional y el problema práctico. representatividad. La integración de las decisiones de ubicación y transporte presenta mejores resultados, en términos de costo logístico y monto a pagar del ICMS, en comparación con un enfoque no integrado de las decisiones. Los resultados muestran que el modelo representa las decisiones del problema y, por lo tanto, tiene el potencial de apoyar el proceso de toma de decisiones de la planificación de la red de distribución farmacéutica.
+
+El uso de Machine Learning e inteligencia artificial ha ido creciendo en varios segmentos junto con la evolución de la arquitectura informática. En el ámbito de la salud, por ejemplo, es posible predecir tendencias para ciertas enfermedades, o incluso ayudar en el tratamiento y creación de nuevos fármacos. En el año 2020, con la pandemia mundial Covid-19, El uso de estas tecnologías fue indispensable para predecir y crear modelos de contaminación del virus. Con base en esta información, este proyecto tiene como objetivo estudiar algoritmos basados en inteligencia artificial, Birch y K-Means, para realizar futuras inferencias entre bases de datos sobre aislamiento social y otros indicadores sociales como la CNAE (Clasificación Actividades Económicas Nacionales), con el fin de generar información sobre la evolución del Covid-19 en el Estado de Rio Grande do Sul [@hertz2021adaptaccao].
 
 
 ### Problema
-El presente trabajo busca determinar, en primera instancia, la cantidad óptima de centros de distribución de medicamentos que debería tener la *Central de Abastecimiento del Sistema Nacional de Servicios de Salud* (CENABAST), la cual es una institución pública, descentralizada dependiente del Ministerio de Salud de la República de Chile. La misión de la mencionada organización es “contribuir al bienestar de la población, asegurando la disponibilidad de medicamentos, alimentos, insumos y equipamiento a la Red de Salud, mediante la gestión de un servicio de abastecimiento de excelencia, eficiente y de calidad, para mejorar la salud de todas las personas que habitan en Chile” [1].
+El presente trabajo busca determinar, en primera instancia, la cantidad óptima de centros de distribución de medicamentos que debería tener la *Central de Abastecimiento del Sistema Nacional de Servicios de Salud* (CENABAST), la cual es una institución pública, descentralizada dependiente del Ministerio de Salud de la República de Chile. La misión de la mencionada organización es “contribuir al bienestar de la población, asegurando la disponibilidad de medicamentos, alimentos, insumos y equipamiento a la Red de Salud, mediante la gestión de un servicio de abastecimiento de excelencia, eficiente y de calidad, para mejorar la salud de todas las personas que habitan en Chile”.
 
 Luego se pretende precisar la ubicación de los mismos dentro del territorio e informar a qué centros de salud abastecería cada distribuidora.
 
@@ -80,7 +104,27 @@ library(kableExtra)
 ```{r}
 DT::datatable(SSCHILE)
 ```
+A continuación se invoca una tabla descriptiva haciendo alusión a la numeración correspondiente a cada región de la República Chile para una mayor compresión del lector en los resultado obtenidos.
 
+
+```{r}
+library(readr)
+SERVI <- read_csv("servicios.data")
+```
+
+```{r}
+columnas <- list("Servicio salud"      )
+colnames(SERVI) <- columnas
+```
+
+```{r}
+library(DT)
+library(kableExtra)
+```
+
+```{r}
+DT::datatable(SERVI)
+```
 
 Generar un reporte exploratorio automático con la biblioteca *skim* a fin de observar las carateristicas de la matriz.
 
@@ -320,5 +364,4 @@ leaflet(data = centros) %>%  addTiles() %>% addMarkers(clusterOptions = markerCl
 
 ### Referencias
 
-[1] https://www.cenabast.cl/institucion/quienes-somos/. Fecha de acceso 20/12/2021.
 
