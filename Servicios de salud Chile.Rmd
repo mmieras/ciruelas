@@ -1,0 +1,497 @@
+---
+title: "Servicios de salud Chile"
+author: "Miguelina Mieras"
+date: "16/12/2021"
+output: html_document
+bibliography: bibliografiachile.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Centros de Distribución de Medicamentos en Chile
+
+### Introducción
+
+Los medicamentos son herramientas terapéuticas utilizadas en la práctica de la medicina, siendo considerados un bien esencial en el desarrollo de los países.
+
+El acceso a medicamentos, de calidad y con uso racional permite la obtención de importantes beneficios en materia de prevención, diagnóstico y tratamiento de las enfermedades y sus síntomas.
+
+La normativa actual (Artículo 7º, Decreto 3/2010) define al medicamento como:
+
+Producto farmacéutico o medicamento es cualquier sustancia, natural o sintética, o mezcla de ellas, que se destine al ser humano con fines de curación, atenuación, tratamiento, prevención o diagnóstico de las enfermedades o sus síntomas, para modificar sistemas fisiológicos o el estado mental en beneficio de la persona a quien le es administrado. Se consideran productos farmacéuticos las materias primas activas, los preparados farmacéuticos, las especialidades farmacéuticas y los medicamentos herbarios tradicionales.
+
+La Central de Abastecimiento del Sistema Nacional de Servicios de Salud (CENABAST) tiene por objetivo abastecer de fármacos e insumos clínicos a los establecimientos del Sistema Nacional de Servicios de Salud, a los establecimientos municipales de salud y a otros adscritos al sector público, como los hospitales de las fuerzas armadas o universidades.
+
+La Organización Panamericana de la Salud propone 12 atributos para medir la integración de las redes de servicios, los cuales deben de ser contextualizados a cada país de la región de manera que puedan ser aplicables a cada uno de ellos [@lopez2009presencia]. Con el propósito de determinar la presencia en el sistema de salud cubano de estos atributos, se realizó esta investigación descriptiva, de corte transversal, en la categoría de investigación en sistemas y servicios de salud. La muestra quedó constituida por 7 provincias del país seleccionadas por un muestreo aleatorio simple. Las variables incluidas respondían a los atributos propuestos por la Organización Panamericana de la Salud. La mayor parte de los atributos (66 %) fueron visualizados en todos los niveles del sistema de salud, mientras que el 25 % de estos fue señalado en al menos un nivel del sistema. De manera general podemos concluir que los 12 atributos propuestos por la Organización Panamericana de la Salud como esenciales y necesarios para alcanzar un adecuado funcionamiento en un Sistema Integrado de Servicios de Salud están presentes en la realidad sanitaria cubana, en todos o al menos 1 de los niveles del sistema nacional de salud. La consulta realizada no produjo nuevos atributos que se consideraran por la parte cubana como esenciales para un adecuado funcionamiento del Sistema Integrado de Servicios a la Salud.
+
+Una extensa oferta de establecimientos y servicios de salud, que incluyen servicios de salud pública, promoción de salud, prevención de enfermedades, diagnóstico y tratamiento oportuno, rehabilitación y cuidados paliativos, todos bajo un único paraguas organizacional.
+Un primer nivel de atención que actúa de facto como puerta de entrada al sistema, que integra y coordina el cuidado de la salud y resuelve la mayoría de las necesidades de salud de la población.
+Entrega de servicios de especialidad en el lugar más apropiado, que se dan preferentemente en ambientes extra-hospitalarios.
+Existencia de mecanismos de coordinación asistencial a lo largo de todo el continuo de servicios.
+Cuidados de la salud centrados en la persona, la familia y la comunidad territorio.
+Un sistema de gobernanza participativa y único para todo el SISS.
+Gestión integrada de los sistemas administrativos y de apoyo clínico.
+Recursos humanos suficientes, competentes y comprometidos con el sistema.
+Sistema de información integrado y que vincule a todos los miembros del SISS.
+Financiamiento adecuado e incentivos financieros alineados con las metas existentes.
+
+Con el análisis estratificado, se permitió determinar aglomeraciones de territorios con similaridades en el comportamiento de diversas variables, con el propósito de contribuir a la selección de sitios centinelas para la vigilancia y las investigaciones epidemiológicas de problemas de salud relevantes, aplicar intervenciones de acuerdo con las condiciones de cada estrato y facilitar la planificación y ubicación de los recursos. El método aplicado fue el análisis de cluster, utilizando un grupo de variables demográficas y socioeconómicas (densidad demográfica, tipo de comunidad, actividad económica principal), en dos etapas: elaboración del árbol jerárquico y posteriormente la conformación de los cluster [@batista2001determinacion]. Se delimitaron cuatro estratos territoriales en el país, determinados básicamente por la densidad demográfica, variable relacionada con el tipo de comunidad y la actividad económica predominante en cada territorio. Esta agrupación permitirá aplicar otros análisis del comportamiento de enfermedades y daños, así como diseños muestrales sobre la base de los estratos determinados.
+
+Los medicamentos son productos sensibles a los factores ambientales, especialmente a la temperatura y la humedad. La logística farmacéutica debe estar bien planificada y ejecutada, a fin de garantizar la conservación de los productos y brindar los más altos niveles de servicio al cliente. La planificación logística comienza con la decisión de ubicación de las instalaciones, como plantas de producción y centros de distribución. La ubicación de las plantas es una decisión a muy largo plazo porque requiere una alta inversión de capital, tiempo y tecnología, así como licencias de entidades sanitarias y gubernamentales. Sin embargo, la ubicación de los centros de distribución es más flexible porque se pueden contratar servicios para un sector farmacéutico de operadores logísticos especializados. Estos operadores logísticos cuentan con estructuras de centros de distribución que se pueden compartir entre varias empresas, ofreciendo menores costos logísticos y flexibilidad en la planificación de las redes de distribución. Las decisiones de gestión de transporte y de inventario, aunque son decisiones de nivel táctico y operativo, tienen el potencial de impactar significativamente el rendimiento de la red, por lo que deben ser consideradas en la planificación desde el principio [@osorio2017modelo].
+En este contexto, este trabajo se enfoca en la planificación de los centros de distribución, proponiendo un modelo de programación matemática para apoyar la decisión de ubicación de los centros de distribución (selección de sitios existentes del operador logístico) y decisiones tácticas de transporte, más específicamente, flujo de producto; selección modal, tipos de carga y tipos de vehículos; y uso de escoltas en el transporte de carga. En el modelo se consideran características particulares de la red, como la conservación de los productos de la cadena de frío y las transacciones de seguridad para el transporte de carga, así como las características del contexto tributario brasileño asociado al Impuesto a la Circulación de Bienes y Servicios (ICMS). El modelo propuesto fue analizado en base a la simplificación de datos reales de una empresa multinacional del sector farmacéutico. Debido a la dimensión del problema, se utilizó el método de K-medias para la agregación de productos en familias y también se estudió la agregación de la demanda en el horizonte de planificación, con el fin de lograr un adecuado equilibrio entre la tratabilidad computacional y el problema práctico. representatividad. La integración de las decisiones de ubicación y transporte presenta mejores resultados, en términos de costo logístico y monto a pagar del ICMS, en comparación con un enfoque no integrado de las decisiones. Los resultados muestran que el modelo representa las decisiones del problema y, por lo tanto, tiene el potencial de apoyar el proceso de toma de decisiones de la planificación de la red de distribución farmacéutica.
+
+El uso de Machine Learning e inteligencia artificial ha ido creciendo en varios segmentos junto con la evolución de la arquitectura informática. En el ámbito de la salud, por ejemplo, es posible predecir tendencias para ciertas enfermedades, o incluso ayudar en el tratamiento y creación de nuevos fármacos. En el año 2020, con la pandemia mundial Covid-19, El uso de estas tecnologías fue indispensable para predecir y crear modelos de contaminación del virus. Con base en esta información, este proyecto tiene como objetivo estudiar algoritmos basados en inteligencia artificial, Birch y K-Means, para realizar futuras inferencias entre bases de datos sobre aislamiento social y otros indicadores sociales como la CNAE (Clasificación Actividades Económicas Nacionales), con el fin de generar información sobre la evolución del Covid-19 en el Estado de Rio Grande do Sul [@hertz2021adaptaccao].
+
+
+### Problema
+El presente trabajo busca determinar, en primera instancia, la cantidad óptima de centros de distribución de medicamentos que debería tener la *Central de Abastecimiento del Sistema Nacional de Servicios de Salud* (CENABAST), la cual es una institución pública, descentralizada dependiente del Ministerio de Salud de la República de Chile. La misión de la mencionada organización es “contribuir al bienestar de la población, asegurando la disponibilidad de medicamentos, alimentos, insumos y equipamiento a la Red de Salud, mediante la gestión de un servicio de abastecimiento de excelencia, eficiente y de calidad, para mejorar la salud de todas las personas que habitan en Chile”.
+
+Luego se pretende precisar la ubicación de los mismos dentro del territorio e informar a qué centros de salud abastecería cada distribuidora.
+
+### Método kmeans
+
+A efectos de sostener un estilo único en los gráficos conviene crear una función de ploteo en la que se repiten los parámetros, *nc* es el número máximo de grupos a considerar y *seed* es una semilla de número aleatorio.
+
+```{r}
+wssplot <- function(data, nc=13, seed=1234){
+               wss <- (nrow(data)-1)*sum(apply(data,2,var))
+               for (i in 2:nc){
+                    set.seed(seed)
+                    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+                plot(1:nc, wss, type="b", xlab="Número de Clusters",
+                     ylab="Suma cuadrática dentro de cada grupo")}
+```
+
+
+Invocar la base de datos
+
+
+```{r}
+library(readr)
+SSCHILE <- read_csv("SSCH.data")
+```
+Definir el nombre de cada columna
+
+```{r}
+columnas <- list("Reg",
+                 "Lat",
+                 "Lng",
+                 "Gasto",
+                 "Conect",
+                 "Dres",
+                 "Pobl",
+                 "< 15",
+                 "> 65",
+                 "Dens",
+                 "Pobl Urb",
+                 "Nat",
+                 "Mort",
+                 "Esp Vida"               )
+
+
+colnames(SSCHILE) <- columnas
+```
+
+
+```{r}
+library(DT)
+library(kableExtra)
+```
+
+
+```{r}
+DT::datatable(SSCHILE)
+```
+A continuación se invoca una tabla descriptiva haciendo alusión a la numeración correspondiente a cada región de la República Chile para una mayor compresión del lector en los resultado obtenidos.
+
+
+```{r}
+library(readr)
+SERVI <- read_csv("servicios.data")
+```
+
+
+
+```{r}
+columnas <- list("Servicio salud"      )
+colnames(SERVI) <- columnas
+```
+
+```{r}
+library(DT)
+library(kableExtra)
+```
+
+```{r}
+DT::datatable(SERVI)
+```
+
+Generar un reporte exploratorio automático con la biblioteca *skim* a fin de observar las carateristicas de la matriz.
+
+
+```{r}
+library(skimr)
+skim(SSCHILE)
+```
+
+Observar como se comporta la suma cuadrática dentro de cada grupo dependiendo del número de cluster
+
+```{r}
+df <- scale(SSCHILE[-1])
+```
+
+```{r}
+wssplot (df)
+```
+
+El índice de Hubert es un método gráfico para determinar el número de clusters. En la gráfica del índice de Hubert, se busca una rodilla significativa que corresponda a un aumento en el valor de la medida, es decir, el pico significativo en la gráfica de las segundas diferencias del índice de Hubert.
+
+Al intentar ejecutar el código, sucede lo siguiente:
+
+*library(NbClust)
+set.seed(1234)
+nc1 <- NbClust(df, min.nc=2, max.nc=13, method="kmeans")*
+
+**Error in solve.default(W) : sistema es computacionalmente singular: número de condición recíproco = 8.72644e-17**
+
+El error indica que hay algún par de columnas que tienen alta correlación. Si dos columnas tienen dependencia lineal el valor kappa (o número de condición) es malo. Para tratar de identificarlas se utiliza **corrplot**
+
+
+```{r}
+SSCHILE.cor <- cor(SSCHILE, method = "pearson")
+```
+
+```{r}
+round(SSCHILE.cor, digits = 2)
+```
+
+```{r}
+corrplot::corrplot(SSCHILE.cor, tl.col = "black", tl.srt = 45)
+```
+```{r}
+corrplot::corrplot(SSCHILE.cor, tl.col = "black", tl.srt = 45, type = "upper")
+```
+
+
+
+
+
+Se observa que, como es lógico la diagonal principal presenta altísima correlación. También se identifica que las columnas *Doctores*, *Población*, *Menores de 15*, *Mayores de 65*, *Densidad* y *Población Urbana* están sumamente relacionadas y son directamente proporcionales. Esto es razonable ya que *Doctores*, *Menores de 15*, *Mayores de 65*, *Densidad* y *Población Urbana* son un porcentaje de *Población*. Para suplir este inconveniente se realiza la eliminación de 5 parámetros, se opta por dejar **"Pobl"**. Por otro lado se visualiza que *Latitud* presenta alta relación con *Natalidad*, se opta porque permanezca **"Lat"**.
+
+Invocar la nueva base de datos
+
+
+```{r}
+library(readr)
+SSCHILEmodificado <- read_csv("SSCHmodificado.data")
+```
+
+Nombrar las columnas que siguen formando parte del dataset
+
+```{r}
+columnas <- list("Reg",
+                 "Lat",
+                 "Long",
+                 "Pobl",
+                 "Mort",
+                 "Esp Vida"  )
+
+colnames(SSCHILEmodificado) <- columnas
+```
+
+
+```{r}
+dt <- SSCHILEmodificado[1:15, 1:6]
+kbl(dt)
+```
+
+
+Generar un reporte exploratorio automático con la biblioteca *skim* a fin de observar las carateristicas de la nueva matriz.
+
+```{r}
+library(skimr)
+skim(SSCHILEmodificado)
+```
+
+Verificar si continúa habiendo alta correlación entre los parametros
+
+
+```{r}
+corrplot::corrplot(cor(SSCHILEmodificado))
+```
+
+Crear una nueva función de ploteo
+
+```{r}
+wssplott <- function(data, nc=14, seed=1234){
+               wss <- (nrow(data)-1)*sum(apply(data,2,var))
+               for (i in 2:nc){
+                    set.seed(seed)
+                    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+                plot(1:nc, wss, type="b", xlab="Número de Clusters",
+                     ylab="Suma cuadrática dentro de cada grupo")}
+```
+
+Observar como se comporta la suma cuadrática dentro de cada grupo dependiendo del número de cluster
+
+```{r}
+df <- scale(SSCHILEmodificado[-1])
+```
+
+```{r}
+wssplott (df)
+```
+Utilizar el método gráfico del índice de Hubert para buscar una rodilla significativa que corresponda a un aumento en el valor de la medida.
+
+```{r}
+library(NbClust)
+set.seed(1234)
+nc <- NbClust(df, min.nc=2, max.nc=7, method="kmeans")
+```
+
+
+```{r}
+table(nc$Best.n[1,])
+```
+                  
+```{r}
+barplot(table(nc$Best.n[1,]), 
+          xlab="Numer of Clusters", ylab="Number of Criteria",
+          main="Number of Clusters Chosen by 26 Criteria")
+```
+
+¿Cuántas muestras hay en cada grupo?
+
+
+```{r}
+set.seed(1234)
+fit.km <- kmeans(df, 3, nstart=25)                           #3
+fit.km$size
+```
+
+¿Dónde estan los centroides?
+
+```{r}
+fit.km$centers  
+```
+
+Matriz de confusión
+
+
+```{r}
+ct.km <- table(SSCHILEmodificado$Pobl, fit.km$cluster)
+ct.km  
+```
+
+
+### ¿Dónde ubicar los 3 centros de distribución? ¿A qúe servicio médico va a abastecer cada uno de ellos?
+
+```{r}
+library(leaflet)
+```
+
+
+En principio, se localizan en el mapa de Chile las regiones que son consideradas en el presente estudio.
+
+```{r}
+CENTROS <- data.frame(lat=SSCHILEmodificado$Lat, long=SSCHILEmodificado$Long, mag=SSCHILEmodificado$Pobl, tiendas=SSCHILEmodificado$Reg ,stringsAsFactors=FALSE)
+
+leaflet(data = CENTROS[1:15, ]) %>% addTiles() %>%
+  addMarkers(~long, ~lat, popup = ~as.character(mag), label = ~as.character(tiendas))
+```
+
+Se analiza como están conformados cada cluster
+
+*Considerando LATITUD*
+
+```{r}
+kmeanslat<-kmeans(SSCHILEmodificado$Lat,3)
+```
+
+
+```{r}
+SSCHILEmodificado$groups<-kmeanslat$cluster
+```
+
+```{r}
+SSCHILEmodificado1<-SSCHILEmodificado[which(SSCHILEmodificado$groups==1),]
+SSCHILEmodificado2<-SSCHILEmodificado[which(SSCHILEmodificado$groups==2),]
+SSCHILEmodificado3<-SSCHILEmodificado[which(SSCHILEmodificado$groups==3),]
+```
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(SSCHILEmodificado1[1:2, ], caption = "Primer Cluster")
+
+```
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(SSCHILEmodificado2[1:4, ], caption = "Segundo Cluster")
+
+```
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(SSCHILEmodificado3[1:9, ], caption = "Tercer Cluster")
+
+```
+
+```{r}
+library(orloca)
+```
+
+
+
+```{r}
+loca1<-loca.p(x=(SSCHILEmodificado1$Long),y=(SSCHILEmodificado1$Lat),w=(SSCHILEmodificado1$Pobl))
+point1<-distsummin(loca1)
+```
+
+
+```{r}
+group2lat<-kmeans(SSCHILEmodificado2$Lat,1)
+group2lon<-kmeans(SSCHILEmodificado2$Long,1)
+point2<-data.frame(group2lon$centers,group2lat$centers)
+loca3<-loca.p(x=(SSCHILEmodificado3$Long),y=(SSCHILEmodificado3$Lat),w=SSCHILEmodificado3$Pobl)
+```
+
+
+```{r}
+point3<-distsummin(loca3,max.iter=200)
+```
+
+
+```{r}
+colnames(point2)<-c("V1","V2")
+points<-data.frame(do.call(rbind,list(point1,point2,point3)))
+colnames(points)<-c("Lon","Lat")
+```
+
+
+```{r}
+library(ggplot2)
+```
+
+
+
+```{r}
+ggplot(aes(Long,Lat,color=groups),data=SSCHILEmodificado)+geom_point()+geom_point(aes(Lon,Lat),color="red",size=8,alpha=.5,data=points)
+```
+
+Ubicación de los cluster en el mapa
+
+
+```{r}
+leaflet(data = points[1:3, ]) %>%  addTiles() %>% addMarkers(
+  clusterOptions = markerClusterOptions())
+```
+
+*Considerando POBLACIÓN*
+
+```{r}
+kmeanspobl<-kmeans(SSCHILEmodificado$Pobl,3)
+```
+
+
+```{r}
+SSCHILEmodificado$groups<-kmeanspobl$cluster
+```
+
+```{r}
+SSCHILEmodificado11<-SSCHILEmodificado[which(SSCHILEmodificado$groups==1),]
+SSCHILEmodificado22<-SSCHILEmodificado[which(SSCHILEmodificado$groups==2),]
+SSCHILEmodificado33<-SSCHILEmodificado[which(SSCHILEmodificado$groups==3),]
+```
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(SSCHILEmodificado11[1:6, ], caption = "Primer Cluster")
+
+```
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(SSCHILEmodificado22[1:1, ], caption = "Segundo Cluster")
+
+```
+
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(SSCHILEmodificado33[1:8, ], caption = "Segundo Cluster")
+
+```
+```{r}
+loca11<-loca.p(x=(SSCHILEmodificado11$Long),y=(SSCHILEmodificado11$Lat),w=(SSCHILEmodificado11$Pobl))
+point11<-distsummin(loca1)
+```
+
+
+```{r}
+group22lat<-kmeans(SSCHILEmodificado22$Lat,1)
+group22lon<-kmeans(SSCHILEmodificado22$Long,1)
+point22<-data.frame(group22lon$centers,group22lat$centers)
+loca33<-loca.p(x=(SSCHILEmodificado33$Long),y=(SSCHILEmodificado33$Lat),w=SSCHILEmodificado33$Pobl)
+```
+
+
+```{r}
+point33<-distsummin(loca33,max.iter=200)
+```
+
+
+```{r}
+colnames(point22)<-c("V1","V2")
+points1<-data.frame(do.call(rbind,list(point11,point22,point33)))
+colnames(points1)<-c("Lon","Lat")
+```
+
+
+```{r}
+ggplot(aes(Long,Lat,color=groups),data=SSCHILEmodificado)+geom_point()+geom_point(aes(Lon,Lat),color="red",size=8,alpha=.5,data=points1)
+```
+
+Ubicación de los cluster en el mapa
+
+
+```{r}
+leaflet(data = points1[1:3, ]) %>%  addTiles() %>% addMarkers(
+  clusterOptions = markerClusterOptions())
+```
+
+
+#### Conclusión
+
+En en base al estudio realizado se obtuvieron los siguientes resultados:
+
+* Construir tres centros de distribución para abastecer el sistema de salud de Chile.
+
+* Considerando suposiciones geoespaciales:
+
+              El primer cluster abastecería las regiones (1, 2, 3 y 15): IQUIQUE/TARAPACÁ, ANTOFAGASTA, ATACAMA y ARICA/PARANICOTA.
+              
+              El segundo cluster abastecería las regiones (4, 5, 6, 7, 8, 9, 10, 13 y 14): COQUIMBO, VALPARAÍSO/SAN ANTONIO, O’HIGGINS, MAULE,CONCEPCIÓN,ARAUCANÍA SUR, RELONCAVÍ, METROPOLITANO CENTRAL y VALDIVIA.
+              
+              El tercer cluster abastecería las regiones (11 y 12): AYSÉN y MAGALLANES. 
+              
+* Considerando suposiciones poblacionales:
+
+              El primer cluster abastecería las regiones (1, 2, 3, 4, 11, 12, 14 y 15):IQUIQUE/TARAPACÁ, ANTOFAGASTA, ATACAMA, COQUIMBO, AYSÉN, MAGALLANES, VALDIVIA y ARICA/PARANICOTA.
+              
+              El segundo cluster abastecería la región (13): METROPOLITANO CENTRAL.
+              
+              El tercer cluster abastecería las regiones ( 5, 6, 7, 8, 9 y 10): VALPARAÍSO/SAN ANTONIO, O’HIGGINS, MAULE,CONCEPCIÓN,ARAUCANÍA SUR y RELONCAVÍ.
+
+Teniendo en cuenta la relación geoespacial y poblacional, se recomienda la ubicación de tres cluster:
+
+Uno en el norte que abastezca las regiones (1, 2, 3 y 15): IQUIQUE/TARAPACÁ, ANTOFAGASTA, ATACAMA y ARICA/PARANICOTA.
+
+Otro en el sur para suplir las regiones (11 y 12): AYSÉN y MAGALLANES.
+
+Y finalmente uno en la región central, pero con dos administraciones. Una para la región (13): METROPOLITANO CENTRAL y otra para las regiones (4, 5, 6, 7, 8, 9, 10 y 14): COQUIMBO, VALPARAÍSO/SAN ANTONIO, O’HIGGINS, MAULE,CONCEPCIÓN,ARAUCANÍA SUR, RELONCAVÍ y VALDIVIA.
+              
+              
+### Referencias
+
+
